@@ -7,7 +7,7 @@
 ### This software may be used and distributed according to the terms of GNU GPLv2
 ### http://www.gnu.org/licenses/gpl-2.0.html
 
-version="0.3.3.20170528"
+version="0.3.4.20170622"
 
 ### Check for "local" variable support
 if type local >/dev/null; then
@@ -634,6 +634,13 @@ acquire_syslog_info () {
 	head -1 ${tmpdir}/syslog.version
 	${syslogbin}-ctl stats > ${tmpdir}/syslog.stats 2>&1
 	echo ${syslogbin}-ctl stats
+	${syslogbin}-ctl query get "*" > ${tmpdir}/syslog.query.all 2>/dev/null
+	echo ${syslogbin}-ctl query get "*"
+	if [ -x ${syslogbin}-query ]; then
+		#if we reach this brach, then syslog.query.all - as generated above - will not contain any meaningful data 
+		${syslogbin}-query sum "*" > ${tmpdir}/syslog.query.all 2>/dev/null
+		echo ${syslogbin}-query sum "*"
+	fi
 	if ${syslogbin}-ctl show-license-info > ${tmpdir}/syslog.license-usage 2>&1; then
 		${syslogbin}-ctl show-license-info --json > ${tmpdir}/syslog.license-usage.json 2>/dev/null
 	fi
