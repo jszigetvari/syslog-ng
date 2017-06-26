@@ -77,3 +77,5 @@ EXTRA_DIST += \
 if ENABLE_SYSTEMD_UNIT_INSTALL
 systemdsystemunit_DATA = contrib/systemd/syslog-ng.service
 endif
+
+sbin_PROGRAMS += contrib/syslog-debun
